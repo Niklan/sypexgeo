@@ -4,3 +4,119 @@
  * @file
  * Main file for hooks.
  */
+
+// For development purposes.
+define('SYPEXGEO_DATABASE_CITY_PATH', 'public://SxGeoCity.dat');
+
+/**
+ * Implements hook_libraries_info().
+ */
+function sypexgeo_libraries_info() {
+  $libraries['sypexgeo'] = array(
+    'name' => 'Sypex Geo PHP Library',
+    'vendor url' => 'https://sypexgeo.net/',
+    'download url' => 'https://sypexgeo.net/ru/download/',
+    'version arguments' => array(
+      'file' => 'SxGeo.php',
+      'pattern' => '@version\s+([0-9a-zA-Z\.-]+)@',
+    ),
+    'files' => array(
+      'php' => array('SxGeo.php'),
+    ),
+    'integration files' => array(
+      'sypexgeo' => array(
+        'php' => array('SxGeo.php'),
+      ),
+    ),
+  );
+
+  return $libraries;
+}
+
+/**
+ * Include SxGeo object.
+ */
+function _sypexgeo_object_init() {
+  if (($library = libraries_load('sypexgeo')) && !empty($library['loaded'])) {
+    return new SxGeo(SYPEXGEO_DATABASE_CITY_PATH);
+  }
+  else {
+    throw new Exception('SypexGeo library is missing.');
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function sypexgeo_menu() {
+  $items = array();
+
+  // @TODO administrative interface.
+
+  return $items;
+}
+
+
+
+/**
+ * Returns full information about IP address.
+ *
+ * @param $ip string
+ *  IP address to get info for.
+ *
+ * @return
+ *  An array with information about IP address.
+ *  - city an array info about city.
+ *  - country an array of country info.
+ */
+function sypexgeo_get_ip($ip) {
+  $sypexgeo = _sypexgeo_object_init();
+  return $sypexgeo->get($ip);
+}
+
+/**
+ * Returns country information for IP address.
+ *
+ * @param $ip string
+ *  IP address to get info for.
+ *
+ * @return
+ *   Country code based on ISO 3166-1 alpha-2 (two symbols). F.e. RU, US, GB.
+ */
+function sypexgeo_get_ip_country($ip) {
+  $sypexgeo = _sypexgeo_object_init();
+  return $sypexgeo->getCountry($ip);
+}
+
+/**
+ * Returns city information for IP address.
+ *
+ * @param $ip string
+ *  IP address to get info for.
+ *
+ * @return
+ *  An array of information:
+ *  - city an array info about city.
+ *  - country an array of country info.
+ */
+function sypexgeo_get_ip_city($ip) {
+  $sypexgeo = _sypexgeo_object_init();
+  return $sypexgeo->getCity($ip);
+}
+
+/**
+ * Returns all information about IP.
+ *
+ * @param $ip string
+ *  IP address to get info for.
+ *
+ * @return
+ *  An array of information:
+ *  - city an array info about city.
+ *  - region an array of region information.
+ *  - country an array of country info.
+ */
+function sypexgeo_get_ip_city_full($ip) {
+  $sypexgeo = _sypexgeo_object_init();
+  return $sypexgeo->getCityFull($ip);
+}
