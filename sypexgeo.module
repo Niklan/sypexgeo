@@ -3,10 +3,17 @@
 /**
  * @file
  * Main file for hooks.
+ *
+ * @TODO
+ *  - Used Google API for determine info about city.
+ *  - Token integration.
+ *  - Views integration.
+ *  - Context integration.
+ *  - Panels integration.
+ *  - Rules integration.
+ *  - Drush integration.
+ *  - Submodule to track users prefered city.
  */
-
-// For development purposes.
-define('SYPEXGEO_DATABASE_CITY_PATH', 'public://SxGeoCity.dat');
 
 /**
  * Implements hook_libraries_info().
@@ -38,7 +45,14 @@ function sypexgeo_libraries_info() {
  */
 function _sypexgeo_object_init() {
   if (($library = libraries_load('sypexgeo')) && !empty($library['loaded'])) {
-    return new SxGeo(SYPEXGEO_DATABASE_CITY_PATH);
+    $db_city_fid = variable_get('sypexgeo_db_city_fid', '');
+    if ($db_city_fid > 0) {
+      $db_city_file = file_load($db_city_fid);
+      return new SxGeo($db_city_file->uri);
+    }
+    else {
+      throw new Exception('SypexGeo City database is not installed.');
+    }
   }
   else {
     throw new Exception('SypexGeo library is missing.');
@@ -51,8 +65,22 @@ function _sypexgeo_object_init() {
 function sypexgeo_menu() {
   $items = array();
 
-  // @TODO administrative interface.
+  $items['admin/config/regional/sypexgeo'] = array(
+    'title' => 'SypexGeo',
+    'description' => 'Configure SypexGeo.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('sypexgeo_admin_database_settings'),
+    'access arguments' => array('administer site configuration'),
+    'weight' => 0,
+    'file' => 'sypexgeo.admin.inc',
+  );
 
+  $items['admin/config/regional/sypexgeo/database'] = array(
+    'title' => 'Database settings',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+  );
+  
   return $items;
 }
 
