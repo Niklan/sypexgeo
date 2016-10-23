@@ -158,7 +158,7 @@ function sypexgeo_get_ip_city_full($ip) {
  * @return
  *  Information about IP.
  */
-function sypexgeto_get_ip_info($ip, $type = 'full') {
+function sypexgeo_get_ip_info($ip, $type = 'full') {
   $results = sypexgeto_get_ip_info_multiple(array($ip), $type);
   return array_shift($results);
 }
@@ -173,7 +173,7 @@ function sypexgeto_get_ip_info($ip, $type = 'full') {
  * @return
  *  Information about IP's.
  */
-function sypexgeto_get_ip_info_multiple($ips, $type = 'full') {
+function sypexgeo_get_ip_info_multiple($ips, $type = 'full') {
   $result = array();
 
   foreach ($ips as $ip) {

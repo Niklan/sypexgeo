@@ -47,8 +47,8 @@ Params:
 - `$type` a string determines which data you will receive. Can be: city, country, full (default). Scroll down to look what info it store.
 
 ~~~php
-$result = sypexgeto_get_ip_info_multiple(array('127.0.0.1')), 'city');
-$result = sypexgeto_get_ip_info_multiple(array('127.0.0.1', '127.0.0.2')));
+$result = sypexgeo_get_ip_info_multiple(array('127.0.0.1')), 'city');
+$result = sypexgeo_get_ip_info_multiple(array('127.0.0.1', '127.0.0.2')));
 ~~~
 
 ### Example 2
@@ -56,8 +56,8 @@ $result = sypexgeto_get_ip_info_multiple(array('127.0.0.1', '127.0.0.2')));
 Same as Example 1, just for single IP address. This is just wrapper for Example 1.
 
 ~~~php
-$result = sypexgeto_get_ip_info('127.0.0.1'); // full
-$result = sypexgeto_get_ip_info('127.0.0.1', 'city');
+$result = sypexgeo_get_ip_info('127.0.0.1'); // full
+$result = sypexgeo_get_ip_info('127.0.0.1', 'city');
 ~~~
 
 ### Example 3
