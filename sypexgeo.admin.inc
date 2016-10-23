@@ -15,7 +15,7 @@ function sypexgeo_admin_database_settings($form, &$form_state) {
     drupal_set_message(t('SypexGeo PHP library is not installed. Please install it before using module.'), 'warning');
     $form['how_to_install_php_library'] = array(
       '#type' => 'markup',
-      '#markup' => t('Go to <a href="@href" target="_blank">download page</a> and download SyepxGeo for PHP. Then extract and place SxGeo.php file to /sites/all/libraries/sypexgeo.',
+      '#markup' => t('Go to <a href="@href" target="_blank">download page</a> and download SyepxGeo for PHP. Then extract and place SxGeo.php file to /sites/all/libraries/sypexgeo. Or you can use drush command <code>drush sypexgeo</code>.',
         array(
           '@href' => 'https://sypexgeo.net/ru/download/',
         )),
