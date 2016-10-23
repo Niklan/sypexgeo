@@ -11,8 +11,8 @@
  *  - Context integration.
  *  - Panels integration.
  *  - Rules integration.
- *  - Drush integration.
- *  - Submodule to track users prefered city.
+ *  - Submodule to track users preferred city.
+ * If you want to help with some of this, welcome to issues.
  */
 
 /**

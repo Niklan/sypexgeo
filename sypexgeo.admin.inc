@@ -22,7 +22,7 @@ function sypexgeo_admin_database_settings($form, &$form_state) {
     );
   }
 
-  $db_description_download = '<p>' . t('You can <a href="@href" target="_blank">download</a> latest version of database on official site.', array('@href' => 'https://sypexgeo.net/ru/download/')) . '</p>';
+  $db_description_download = '<p>' . t('You can <a href="@href" target="_blank">download</a> latest version of database on official site. Or you can use drush command <code>drush sypexgeo</code> to update or download fresh database.', array('@href' => 'https://sypexgeo.net/ru/download/')) . '</p>';
   $last_update_time = variable_get('sypexgeo_db_city_last_update', 0);
   if ($last_update_time) {
     $db_description_last_update = '<p>' . t('Current database uploaded on @date', array('@date' => format_date($last_update_time))) . '</p>';
