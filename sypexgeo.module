@@ -57,7 +57,6 @@ function sypexgeo_menu() {
 }
 
 
-
 /**
  * Returns full information about IP address.
  *
@@ -119,4 +118,52 @@ function sypexgeo_get_ip_city($ip) {
 function sypexgeo_get_ip_city_full($ip) {
   $sypexgeo = _sypexgeo_object_init();
   return $sypexgeo->getCityFull($ip);
+}
+
+/**
+ * Return information about ip certain type.
+ *
+ * @param
+ *  $ip - string of ip address.
+ *  $type - type data you need to retrive. Can be: city, country, full.
+ *
+ * @return
+ *  Information about IP.
+ */
+function sypexgeto_get_ip_info($ip, $type = 'full') {
+  $results = sypexgeto_get_ip_info_multiple(array($ip), $type);
+  return array_shift($results);
+}
+
+/**
+ * Return information about IP's.
+ *
+ * @param
+ *  $ips - array of ip addresses.
+ *  $type - type data you need to retrive. Can be: city, country, full.
+ *
+ * @return
+ *  Information about IP's.
+ */
+function sypexgeto_get_ip_info_multiple($ips, $type = 'full') {
+  $result = array();
+
+  foreach ($ips as $ip) {
+    switch ($type) {
+      case 'city':
+        $result[] = sypexgeo_get_ip_city($ip);
+        break;
+
+      case 'country':
+        $result[] = sypexgeo_get_ip_country($ip);
+        break;
+
+      case 'full':
+      default:
+        $result[] = sypexgeo_get_ip_city_full($ip);
+        break;
+    }
+  }
+
+  return $result;
 }
